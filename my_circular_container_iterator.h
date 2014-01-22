@@ -1,8 +1,6 @@
 #ifndef __MY_CIRCULAR_CONTAINER_ITERATOR_H__
 #define __MY_CIRCULAR_CONTAINER_ITERATOR_H__
 
-#include "my_circular_container_iterator.h"
-
 /* NOTE! When the container size is 0, the behavior is not guranteed.
  * It may run into infinite loop.
  */
