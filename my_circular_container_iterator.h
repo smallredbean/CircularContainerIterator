@@ -3,6 +3,9 @@
 
 #include "my_circular_container_iterator.h"
 
+/* NOTE! When the container size is 0, the behavior is not guranteed.
+ * It may run into infinite loop.
+ */
 template <class Container, class Iterator>
 class MyCircularContainerIterator: public Iterator{
 private:
