@@ -110,10 +110,20 @@ void unit_test_size_5(void)
     output.clear();
 }
 
+void unit_test_iterator_to_index(void)
+{
+	vector<int> v({1, 2, 3, 4, 5});
+	MyCircularContainerIterator<vector<int>, vector<int>::iterator> it(v, v.begin());
+
+	for(auto steps=v.size(); steps; --steps, ++it)
+		assert(*it==v[it.iterator2index()]);
+}
+
 int main(int argc, char **argv)
 {
     unit_test_size_1();
     unit_test_size_5();
+	unit_test_iterator_to_index();
 
 	return 0;
 }
