@@ -75,5 +75,12 @@ public:
 		this->c = cit.c;
 		return *this;
 	}
+
+	// The index returned only works for Container that supports random access
+	typename Container::size_type iterator2index(void)
+	{
+		Iterator &tmp(*this);
+		return tmp - c.begin();
+	}
 };
 #endif
