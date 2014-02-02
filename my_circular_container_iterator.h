@@ -5,7 +5,7 @@
  * It may run into infinite loop.
  */
 template <class Container, class Iterator>
-class MyCircularContainerIterator: public Iterator{
+class MyCircularContainerIterator: public Iterator {
 private:
 	const Container *c;
 
@@ -17,8 +17,9 @@ public:
 
 	MyCircularContainerIterator &operator=(const MyCircularContainerIterator &cit)
 	{
-		if(this==&cit) // check for self-assignment
+		if (this == &cit) {  // check for self-assignment
 			return *this;
+		}
 
 		Iterator &tmp(*this);
 		tmp = Iterator(cit);
@@ -31,10 +32,12 @@ public:
 		Iterator &tmp(*this);
 		tmp += delta;
 
-		while(tmp<c->cbegin())
+		while (tmp < c->cbegin()) {
 			tmp += c->size();
-		while(tmp>=c->cend())
+		}
+		while (tmp >= c->cend()) {
 			tmp -= c->size();
+		}
 		return *this;
 	}
 
@@ -43,24 +46,24 @@ public:
 		return operator+=(-delta);
 	}
 
-	MyCircularContainerIterator &operator++() // ++i
+	MyCircularContainerIterator &operator++()  // ++i
 	{
 		return operator+=(1);
 	}
 
-	const MyCircularContainerIterator operator++(int) // i++
+	const MyCircularContainerIterator operator++(int)  // i++
 	{
 		MyCircularContainerIterator tmp(*this);
 		operator++();
 		return tmp;
 	}
 
-	MyCircularContainerIterator &operator--() // --i
+	MyCircularContainerIterator &operator--()  // --i
 	{
 		return operator-=(1);
 	}
 
-	const MyCircularContainerIterator operator--(int) // i--
+	const MyCircularContainerIterator operator--(int)  // i--
 	{
 		MyCircularContainerIterator tmp(*this);
 		operator--();
