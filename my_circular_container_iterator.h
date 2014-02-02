@@ -7,59 +7,34 @@
 template <class Container, class Iterator>
 class MyCircularContainerIterator: public Iterator{
 private:
-	Container &c;
+	const Container *c;
 
 public:
-	MyCircularContainerIterator(Container &_c, Iterator _it)
-		: Iterator(_it),  c(_c)
+	MyCircularContainerIterator(const Container &_c, const Iterator _it)
+		: Iterator(_it),  c(&_c)
 	{
 	}
 
-	MyCircularContainerIterator &operator++() // ++i
+	MyCircularContainerIterator &operator=(const MyCircularContainerIterator &cit)
 	{
-		return this->operator+=(1);
-	}
+		if(this==&cit) // check for self-assignment
+			return *this;
 
-	MyCircularContainerIterator operator++(int) // i++
-	{
-		MyCircularContainerIterator tmp(*this);
-		++(*this);
-		return tmp;
-	}
-
-	MyCircularContainerIterator &operator--() // --i
-	{
-		return this->operator-=(1);
-	}
-
-	MyCircularContainerIterator operator--(int) // i--
-	{
-		MyCircularContainerIterator tmp(*this);
-		--(*this);
-		return tmp;
-	}
-
-	MyCircularContainerIterator operator+(int delta)
-	{
-		Iterator tmp(*this);
-		tmp += delta;
-
-		while(tmp<c.begin())
-			tmp += c.size();
-		while(tmp>=c.end())
-			tmp -= c.size();
-
-		return MyCircularContainerIterator(c, tmp);
-	}
-
-	MyCircularContainerIterator operator-(int delta)
-	{
-		return operator+(-delta);
+		Iterator &tmp(*this);
+		tmp = Iterator(cit);
+		this->c = cit.c;
+		return *this;
 	}
 
 	MyCircularContainerIterator &operator+=(int delta)
 	{
-		*this = this->operator+(delta);
+		Iterator &tmp(*this);
+		tmp += delta;
+
+		while(tmp<c->cbegin())
+			tmp += c->size();
+		while(tmp>=c->cend())
+			tmp -= c->size();
 		return *this;
 	}
 
@@ -68,19 +43,45 @@ public:
 		return operator+=(-delta);
 	}
 
-	MyCircularContainerIterator &operator=(const MyCircularContainerIterator &cit)
+	MyCircularContainerIterator &operator++() // ++i
 	{
-		Iterator &tmp(*this);
-		tmp = Iterator(cit);
-		this->c = cit.c;
-		return *this;
+		return operator+=(1);
+	}
+
+	const MyCircularContainerIterator operator++(int) // i++
+	{
+		MyCircularContainerIterator tmp(*this);
+		operator++();
+		return tmp;
+	}
+
+	MyCircularContainerIterator &operator--() // --i
+	{
+		return operator-=(1);
+	}
+
+	const MyCircularContainerIterator operator--(int) // i--
+	{
+		MyCircularContainerIterator tmp(*this);
+		operator--();
+		return tmp;
+	}
+
+	const MyCircularContainerIterator operator+(int delta) const
+	{
+		return MyCircularContainerIterator(*this) += delta;
+	}
+
+	const MyCircularContainerIterator operator-(int delta) const
+	{
+		return operator+(-delta);
 	}
 
 	// The index returned only works for Container that supports random access
-	typename Container::size_type iterator2index(void)
+	const typename Container::size_type iterator2index(void) const
 	{
-		Iterator &tmp(*this);
-		return tmp - c.begin();
+		const Iterator &tmp(*this);
+		return tmp - c->cbegin();
 	}
 };
 #endif
