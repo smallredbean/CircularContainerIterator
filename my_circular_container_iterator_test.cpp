@@ -13,6 +13,10 @@ void unit_test_size_1(void)
 	vector<int> v({1});
 	MyCircularContainerIterator<vector<int>, vector<int>::iterator> it(v, v.begin());
 
+	// +, -
+	assert(*(it+1)==1);
+	assert(*(it-1)==1);
+
 	// ++it
 	for(auto i=0; i<5; ++i)
 		assert(*(++it)==1);
@@ -52,6 +56,10 @@ void unit_test_size_5(void)
 	MyCircularContainerIterator<vector<int>, vector<int>::iterator> vIt(v, v.begin());
 	MyCircularContainerIterator<vector<int>, vector<int>::iterator> it(vIt);
 	vector<int> output;
+
+	// +, -
+	assert(*(it+1)==2);
+	assert(*(it-1)==5);
 
 	// ++it
 	for(auto i=0; i<7; ++i)
