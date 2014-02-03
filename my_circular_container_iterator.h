@@ -11,7 +11,7 @@ private:
 
 public:
 	MyCircularContainerIterator(const Container &_c, const Iterator _it)
-		: Iterator(_it),  c(&_c)
+		: Iterator(_it), c(&_c)
 	{
 	}
 
