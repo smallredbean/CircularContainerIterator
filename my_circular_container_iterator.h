@@ -5,7 +5,7 @@
  * It may run into infinite loop.
  */
 template <class Container, class Iterator>
-class MyCircularContainerIterator: public Iterator {
+class MyCircularContainerIterator: public Iterator{
 private:
 	const Container *c;
 
